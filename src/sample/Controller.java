@@ -20,9 +20,6 @@ public class Controller {
     private static ObservableList<MemoryBlock> listMemory = FXCollections.observableArrayList();
 
     @FXML
-    private static Label txtProgressInPercent;
-
-    @FXML
     private ProgressBar progressBarMemory;
 
     @FXML
@@ -99,15 +96,6 @@ public class Controller {
 
     @FXML
     private TableColumn<MemoryBlock, Integer> endMemoryBlockColumn;
-
-    @FXML
-    private static Label txtMemory;
-
-    @FXML
-    private static Label txtQuantityThreads;
-
-    @FXML
-    public static Label txtQuantityProcesses;
 
     private static Queue queue = new Queue();
     private static Scheduler scheduler = new Scheduler();

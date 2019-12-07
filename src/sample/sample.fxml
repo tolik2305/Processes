@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -11,32 +7,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Файл">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Новый" />
-            <MenuItem mnemonicParsing="false" text="Открыть" />
-            <MenuItem mnemonicParsing="false" text="Сохранить" />
-            <MenuItem mnemonicParsing="false" text="Выйти" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Редактирование">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Удаление" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Помощь">
-          <items>
-            <MenuItem mnemonicParsing="false" text="О программе" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <TabPane prefHeight="375.0" prefWidth="710.0" tabClosingPolicy="UNAVAILABLE">

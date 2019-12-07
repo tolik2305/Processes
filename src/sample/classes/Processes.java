@@ -41,12 +41,12 @@ public class Processes{
         }
     }
 
-    public Process processMinPriority(){
-        int minPriority=31;
+    public Process processMaxPriority(){
+        int maxPriority=0;
         Process currentProcess = null;
         for (Process process:getList()) {
-            if(process.getPriority()<minPriority&&!process.getTypeState().equals(StateProcess.REJECTED)&&!process.getTypeState().equals(StateProcess.TERMINATED)){
-                minPriority=process.getPriority();
+            if(process.getPriority()>maxPriority&&!process.getTypeState().equals(StateProcess.REJECTED)&&!process.getTypeState().equals(StateProcess.TERMINATED)){
+                maxPriority=process.getPriority();
                 currentProcess = process;
             }
         }
@@ -55,7 +55,7 @@ public class Processes{
 
 
     public void Work() throws InterruptedException {
-        Process currentProcess = processMinPriority();
+        Process currentProcess = processMaxPriority();
         queue = new Queue(scheduler);
         if(currentProcess!=null) {
             if (queue.add(currentProcess)) {

@@ -2,11 +2,11 @@ package sample.classes;
 
 import java.util.ArrayList;
 
-public class ConfirmedQueue {
+public class ConfirmedProcesses {
 
     private ArrayList<Process> confirmedQueue;
 
-    public ConfirmedQueue(){
+    public ConfirmedProcesses(){
         confirmedQueue = new ArrayList<>();
     }
 

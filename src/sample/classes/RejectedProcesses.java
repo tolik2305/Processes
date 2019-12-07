@@ -2,8 +2,8 @@ package sample.classes;
 
 import java.util.ArrayList;
 
-public class RejectedQueue {
-    public RejectedQueue(){
+public class RejectedProcesses {
+    public RejectedProcesses(){
         rejectedQueue = new ArrayList<>();
     }
 

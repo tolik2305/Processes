@@ -3,8 +3,8 @@ package sample.classes;
 import java.util.ArrayList;
 
 public class Queue {
-    private ConfirmedQueue confirmedQueue = new ConfirmedQueue();
-    private RejectedQueue rejectedQueue = new RejectedQueue();
+    private ConfirmedProcesses confirmedProcesses = new ConfirmedProcesses();
+    private RejectedProcesses rejectedProcesses = new RejectedProcesses();
     private Scheduler scheduler;
     private int start;
 
@@ -21,19 +21,19 @@ public class Queue {
     }
 
     public ArrayList getConfirmedProcesses(){
-        return confirmedQueue.getConfirmedQueue();
+        return confirmedProcesses.getConfirmedQueue();
     }
 
     public void addConfirmedProcess(Process process){
-        confirmedQueue.add(process);
+        confirmedProcesses.add(process);
     }
 
     public void addRejectedProcess(Process process){
-        rejectedQueue.add(process);
+        rejectedProcesses.add(process);
     }
 
     public ArrayList getRejectedProcesses(){
-        return rejectedQueue.getRejectedQueue();
+        return rejectedProcesses.getRejectedQueue();
     }
 
     boolean add(Process process){
@@ -57,14 +57,14 @@ public class Queue {
             if(MemoryBlock.byEnd.compare(scheduler.getMemoryBlocks().get(i), scheduler.getMemoryBlocks().get(i+1))==min){
                 this.start = scheduler.getMemoryBlocks().get(i).getEnd();
                 process.setTypeState(StateProcess.READY);
-                confirmedQueue.add(process);
+                confirmedProcesses.add(process);
                 isConfirmed=true;
                 break;
             }
         }
         if(!isConfirmed) {
             process.setTypeState(StateProcess.REJECTED);
-            rejectedQueue.add(process);
+            rejectedProcesses.add(process);
         }
         return isConfirmed;
     }

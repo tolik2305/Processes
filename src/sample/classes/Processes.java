@@ -87,4 +87,12 @@ public class Processes{
         scheduler.deleteBlock(memoryBlock);
         Controller.Refresh();
     }
+
+    public void ChangePriority(int id, int priority){
+        for (Process process:this.list) {
+            if(process.getId()==id){
+                process.setPriority(priority);
+            }
+        }
+    }
 }

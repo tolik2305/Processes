@@ -4,12 +4,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sample.Controllers.InputPriority;
 import sample.classes.*;
 import sample.classes.Process;
 
@@ -178,6 +180,18 @@ public class Controller {
         for (Process process:processes.getList()) {
             if(process.getTypeState().equals(StateProcess.REJECTED)){
                 listRejected.add(process);
+            }
+        }
+    }
+
+    public void changePriority(ActionEvent actionEvent) {
+        Process selectedItem = tableProcesses.getSelectionModel().getSelectedItem();
+        Main.InputPriority();
+        if(!InputPriority.isCancel) {
+            int priority = InputPriority.priority;
+            if(selectedItem!=null) {
+                processes.ChangePriority(selectedItem.getId(), priority);
+                Refresh();
             }
         }
     }

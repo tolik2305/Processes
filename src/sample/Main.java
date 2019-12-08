@@ -8,9 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import sample.classes.Scheduler;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -29,6 +33,22 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
+    }
+
+
+    public static void InputPriority() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("inputPriority.fxml"));
+            Parent inputPriority = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Изменение приоритета");
+            stage.setScene(new Scene(inputPriority));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

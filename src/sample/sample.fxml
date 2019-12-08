@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -29,6 +31,13 @@
                                     <TableColumn fx:id="priorityColumn" prefWidth="81.0" text="Приоритет" />
                                     <TableColumn fx:id="sizeColumn" prefWidth="70.0" text="Размер" />
                                 </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Изменение приоритета" onAction="#changePriority"/>
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
                               </TableView>
                            </children>
                         </AnchorPane>

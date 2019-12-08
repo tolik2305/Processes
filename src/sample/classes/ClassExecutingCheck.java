@@ -16,5 +16,4 @@ public class ClassExecutingCheck {
         long delay = 1 * 1000;
         timer.scheduleAtFixedRate(timerTaskCheck, date, delay);
     }
-
 }

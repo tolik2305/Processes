@@ -3,7 +3,6 @@ package sample.classes;
 import sample.Controller;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Processes{
     private Scheduler scheduler;
@@ -20,8 +19,10 @@ public class Processes{
         this.scheduler = scheduler;
     }
 
-    public void CheckByPriority(){
+    public void CheckByPriority() throws InterruptedException {
         Process runningProcess = null;
+        Process processNew = null;
+        boolean isFind = false;
 
         for (Process process:getList()) {
             if(process.getTypeState().equals(StateProcess.RUNNING)){
@@ -29,15 +30,22 @@ public class Processes{
             }
 
             if(runningProcess!=null) {
-                if (process.getId() < runningProcess.getId()) {
-                    getList().get(getList().indexOf(runningProcess)).setTypeState(StateProcess.WAITING);
-                    try {
-                        toWork(process);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                if (process.getPriority() > runningProcess.getPriority()) {
+                    if (queue.add(process)) {
+                        getList().get(getList().indexOf(runningProcess)).setTypeState(StateProcess.WAITING);
+                        process.setTypeState(StateProcess.RUNNING);
+                        processNew = process;
+                        isFind = true;
+                        break;
+                    } else {
+                        process.setTypeState(StateProcess.REJECTED);
                     }
                 }
             }
+        }
+        if(isFind){
+            scheduler.deleteBlock(scheduler.findById(runningProcess.getId()));
+            toWork(processNew);
         }
     }
 
@@ -74,7 +82,7 @@ public class Processes{
         scheduler.add(memoryBlock);
         scheduler.getMemoryBlocks().sort(MemoryBlock.byAsc);
         Controller.Refresh();
-        Thread.sleep(process.getTime()*100);
+        Thread.sleep(process.getTime()*1000);
         process.setTypeState(StateProcess.TERMINATED);
         scheduler.deleteBlock(memoryBlock);
         Controller.Refresh();

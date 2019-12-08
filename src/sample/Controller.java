@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -97,7 +98,6 @@ public class Controller {
     @FXML
     private TableColumn<MemoryBlock, Integer> endMemoryBlockColumn;
 
-    private static Queue queue = new Queue();
     private static Scheduler scheduler = new Scheduler();
     private static Processes processes = new Processes(scheduler);
 

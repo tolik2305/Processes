@@ -21,4 +21,13 @@ public class Scheduler {
     public void deleteBlock(MemoryBlock memoryBlock) {
         getMemoryBlocks().remove(memoryBlock);
     }
+
+    public MemoryBlock findById(int id){
+        for (MemoryBlock memoryBlock:getMemoryBlocks()) {
+            if(memoryBlock.getId()==id){
+                return memoryBlock;
+            }
+        }
+        return null;
+    }
 }

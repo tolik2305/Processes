@@ -12,6 +12,10 @@ public class TimerTaskCheck extends TimerTask {
 
     @Override
     public void run() {
-        processes.CheckByPriority();
+        try {
+            processes.CheckByPriority();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

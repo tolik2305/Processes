@@ -13,7 +13,7 @@ public class ClassExecutingTask {
         Timer timer = new Timer("Generate process");
         TimerTaskProcess timerTaskProcess = new TimerTaskProcess(processes);
         Date date = new Date();
-        long delay = 5 * 1000;
-        timer.scheduleAtFixedRate(timerTaskProcess, date, delay);
+        long delay = 5*1000;
+        timer.schedule(timerTaskProcess, date, delay);
     }
 }

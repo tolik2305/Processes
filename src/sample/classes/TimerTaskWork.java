@@ -1,7 +1,5 @@
 package sample.classes;
 
-import sample.Controller;
-
 import java.util.TimerTask;
 
 public class TimerTaskWork extends TimerTask {
@@ -10,15 +8,11 @@ public class TimerTaskWork extends TimerTask {
 
     public TimerTaskWork(Processes processes){
         this.processes = processes;
+        this.run();
     }
 
     @Override
     public void run() {
-        try {
-            processes.Work();
-            Controller.Refresh();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        processes.Work();
     }
 }

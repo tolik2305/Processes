@@ -5,8 +5,8 @@ import java.util.Timer;
 
 public class ClassExecutingCheck {
 
-    public ClassExecutingCheck(){
-
+    public ClassExecutingCheck(Processes processes){
+        Check(processes);
     }
 
     public void Check(Processes processes) {

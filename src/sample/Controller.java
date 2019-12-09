@@ -102,6 +102,7 @@ public class Controller {
 
     private static Scheduler scheduler = new Scheduler();
     private static Processes processes = new Processes(scheduler);
+    public static int workOdds = 1000;
 
     public void initialize(){
         idConfirmedColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("id"));
@@ -155,30 +156,47 @@ public class Controller {
             }
         });
 
-        ClassExecutingTask classExecutingTask = new ClassExecutingTask();
-        classExecutingTask.Generate(processes);
+        new Thread() {
+            ClassExecutingTask classExecutingTask = new ClassExecutingTask(processes);
+        };
 
-        ClassExecutingWork classExecutingWork = new ClassExecutingWork();
-        classExecutingWork.Work(processes);
+        new Thread() {
+            ClassExecutingWork classExecutingWork = new ClassExecutingWork(processes);
+        };
 
-        ClassExecutingCheck classExecutingCheck = new ClassExecutingCheck();
-        classExecutingCheck.Check(processes);
+        new Thread() {
+            ClassExecutingCheckTime classExecutingCheckTime = new ClassExecutingCheckTime(processes);
+        };
+
+        new Thread() {
+            ClassExecutingCheck classExecutingCheck = new ClassExecutingCheck(processes);
+        };
+
+        new Thread() {
+            ClassExecutingRefreshData classExecutingRefreshData = new ClassExecutingRefreshData();
+        };
     }
 
     public static void Refresh(){
-        list.clear();
+        if(list.size()!=0) {
+            list.clear();
+        }
         list.addAll(processes.getList());
         listMemory.clear();
         listMemory.addAll(scheduler.getMemoryBlocks());
-        listConfirmed.clear();
-        for (Process process:processes.getList()) {
-            if(process.getTypeState().equals(StateProcess.READY)||process.getTypeState().equals(StateProcess.RUNNING)||process.getTypeState().equals(StateProcess.TERMINATED)){
+        if(listConfirmed!=null) {
+            listConfirmed.clear();
+        }
+        for (Process process : processes.getList()) {
+            if (process.getTypeState().equals(StateProcess.READY) || process.getTypeState().equals(StateProcess.RUNNING) || process.getTypeState().equals(StateProcess.TERMINATED)) {
                 listConfirmed.add(process);
             }
         }
-        listRejected.clear();
-        for (Process process:processes.getList()) {
-            if(process.getTypeState().equals(StateProcess.REJECTED)){
+        if(listRejected.size()!=0) {
+            listRejected.clear();
+        }
+        for (Process process : processes.getList()) {
+            if (process.getTypeState().equals(StateProcess.REJECTED)) {
                 listRejected.add(process);
             }
         }
@@ -191,7 +209,6 @@ public class Controller {
             int priority = InputPriority.priority;
             if(selectedItem!=null) {
                 processes.ChangePriority(selectedItem.getId(), priority);
-                Refresh();
             }
         }
     }

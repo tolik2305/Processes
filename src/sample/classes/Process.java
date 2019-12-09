@@ -12,8 +12,8 @@ public class Process {
     private int size;
 
     private Random random = new Random();
-    private final int maxInt = 300;
-    private final int minInt = 10;
+    private final int maxInt = 30;
+    private final int minInt = 5;
     private StateProcess typeState;
 
 

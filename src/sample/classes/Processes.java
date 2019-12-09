@@ -5,6 +5,7 @@ import sample.Controller;
 import java.util.ArrayList;
 
 public class Processes{
+
     private Scheduler scheduler;
 
     public ArrayList<Process> getList() {
@@ -19,7 +20,7 @@ public class Processes{
         this.scheduler = scheduler;
     }
 
-    public void CheckByPriority() throws InterruptedException {
+    public void CheckByPriority() {
         Process runningProcess = null;
         Process processNew = null;
         boolean isFind = false;
@@ -30,7 +31,7 @@ public class Processes{
             }
 
             if(runningProcess!=null) {
-                if (process.getPriority() > runningProcess.getPriority()) {
+                if (process.getPriority() < runningProcess.getPriority()) {
                     if (queue.add(process)) {
                         getList().get(getList().indexOf(runningProcess)).setTypeState(StateProcess.WAITING);
                         process.setTypeState(StateProcess.RUNNING);
@@ -49,21 +50,20 @@ public class Processes{
         }
     }
 
-    public Process processMaxPriority(){
-        int maxPriority=0;
+    public Process processMinPriority(){
+        int minPriority=32;
         Process currentProcess = null;
-        for (Process process:getList()) {
-            if(process.getPriority()>maxPriority&&!process.getTypeState().equals(StateProcess.REJECTED)&&!process.getTypeState().equals(StateProcess.TERMINATED)){
-                maxPriority=process.getPriority();
+        for (Process process:this.getList()) {
+            if(process.getPriority()<minPriority&&!process.getTypeState().equals(StateProcess.REJECTED)&&!process.getTypeState().equals(StateProcess.RUNNING)&&!process.getTypeState().equals(StateProcess.TERMINATED)){
+                minPriority=process.getPriority();
                 currentProcess = process;
             }
         }
     return currentProcess;
     }
 
-
-    public void Work() throws InterruptedException {
-        Process currentProcess = processMaxPriority();
+    public void Work() {
+        Process currentProcess = processMinPriority();
         queue = new Queue(scheduler);
         if(currentProcess!=null) {
             if (queue.add(currentProcess)) {
@@ -76,16 +76,19 @@ public class Processes{
         }
     }
 
-    private void toWork(Process process) throws InterruptedException {
+    private void toWork(Process process) {
         getList().get(getList().indexOf(process)).setTypeState(StateProcess.RUNNING);
         MemoryBlock memoryBlock = new MemoryBlock(process.getId(), queue.getStart() + 1, queue.getStart() + process.getSize()+1);
         scheduler.add(memoryBlock);
         scheduler.getMemoryBlocks().sort(MemoryBlock.byAsc);
-        Controller.Refresh();
-        Thread.sleep(process.getTime()*1000);
-        process.setTypeState(StateProcess.TERMINATED);
-        scheduler.deleteBlock(memoryBlock);
-        Controller.Refresh();
+    }
+
+    public void findTerminatedProcesses(){
+        for (Process process:this.list) {
+            if(process.getTypeState().equals(StateProcess.TERMINATED)){
+                scheduler.deleteBlock(scheduler.findById(process.getId()));
+            }
+        }
     }
 
     public void ChangePriority(int id, int priority){

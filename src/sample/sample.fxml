@@ -26,7 +26,7 @@
                                   <TableColumn fx:id="nameColumn" prefWidth="104.0" text="Имя процесса" />
                                     <TableColumn fx:id="timeOfTactsColumn" prefWidth="127.0" text="Интервал в тактах" />
                                     <TableColumn fx:id="timeInColumn" prefWidth="95.0" text="Время входа" />
-                                    <TableColumn fx:id="timeColumn" prefWidth="105.0" text="Время работы" />
+                                    <TableColumn fx:id="timeColumn" prefWidth="105.0" text="До завершения" />
                                     <TableColumn fx:id="stateColumn" prefWidth="90.0" text="Состояние" />
                                     <TableColumn fx:id="priorityColumn" prefWidth="81.0" text="Приоритет" />
                                     <TableColumn fx:id="sizeColumn" prefWidth="70.0" text="Размер" />

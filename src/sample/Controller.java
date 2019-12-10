@@ -6,9 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import sample.Controllers.InputPriority;
 import sample.classes.*;
 import sample.classes.Process;
@@ -122,11 +124,12 @@ public class Controller {
     @FXML
     private TableColumn<MemoryBlock, Integer> endMemoryBlockColumn;
 
+    private Process selectedItem = null;
+
     private static Scheduler scheduler = new Scheduler();
     private static Processes processes = new Processes(scheduler);
 
     public void initialize(){
-
         idConfirmedColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("id"));
         nameConfirmedColumn.setCellValueFactory(new PropertyValueFactory<Process, String>("name"));
         timeOfTactsConfirmedColumn.setCellValueFactory(new PropertyValueFactory<Process, Integer>("timeOfTacts"));
@@ -164,6 +167,9 @@ public class Controller {
         tableConfirmedProcesses.setItems(listConfirmed);
         tableRejectedProcesses.setItems(listRejected);
         tableMemoryBlocks.setItems(listMemory);
+
+
+
         ObservableList<String> speed = FXCollections.observableArrayList("x1", "x2", "x4");
         choiceSpeed.setItems(speed);
         choiceSpeed.setValue("x1");
@@ -212,14 +218,25 @@ public class Controller {
         new Thread() {
             ClassExecutingRefreshData classExecutingRefreshData = new ClassExecutingRefreshData();
         };
+
         Statistics();
+
+        tableProcesses.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedItem = tableProcesses.getSelectionModel().getSelectedItem();
+            }
+        });
     }
 
     public static void Refresh(){
-        if(list.size()!=0) {
+        if(!list.isEmpty()){
             list.clear();
+            list.addAll(processes.getList());
+        } else {
+            list.addAll(processes.getList());
         }
-        list.addAll(processes.getList());
+
         listMemory.clear();
         listMemory.addAll(scheduler.getMemoryBlocks());
         if(listConfirmed!=null) {
@@ -241,7 +258,6 @@ public class Controller {
     }
 
     public void changePriority(ActionEvent actionEvent) {
-        Process selectedItem = tableProcesses.getSelectionModel().getSelectedItem();
         Main.InputPriority();
         if(!InputPriority.isCancel) {
             int priority = InputPriority.priority;
